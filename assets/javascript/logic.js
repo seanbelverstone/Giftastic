@@ -16,9 +16,9 @@ Possibly also include:
 //button click event
 $("button").on("click", function() {
     var game = $(this).attr("data-game"); //grabs the data from the button
-    var limit = "10";
+    var limit = 10;
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-      game + "&api_key=idmgGsqOAloHdaE7trSyIAQ9iQskkUCT&limit=" + limit + "&rating=g"; //inputs the API url + user input + apikey and limit
+      game + "&api_key=idmgGsqOAloHdaE7trSyIAQ9iQskkUCT&rating=g&" + limit; //inputs the API url + user input + apikey and limit
 
       $.ajax({ //ajax function to request a response
         url: queryURL,
@@ -47,13 +47,13 @@ $("button").on("click", function() {
 
         $(".gif").click(function () {
           for (var j = 0; j < results.length; j++) { //runs a loop through the results
-          var state = $(this).attr("data-state"); //stores the data-state in the state variable
-          if (state === "still") {
-            $(this).attr("src", results[j].images.fixed_height.url); //changes the url to specified animated image
-            $(this).attr("data-state", "animate");
-          } else {
-            $(this).attr("src", results[j].images.fixed_height_still.url);
-            $(this).attr("data-state", "still");
+            var state = $(this).attr("data-state"); //stores the data-state in the state variable
+            if (state === "still") {
+              gameImage.attr("src", results[j].images.fixed_height.url); //changes the url to specified animated image
+              $(this).attr("data-state", "animate");
+            } else {
+              gameImage.attr("src", results[j].images.fixed_height_still.url);
+              $(this).attr("data-state", "still");
           }
         }
         });
