@@ -1,0 +1,2 @@
+# Giftastic
+This is a web page that features clickable buttons relating to a certain theme. When a button is clicked, 10 static gifs will populate on the page. When each gif is clicked on, it will begin to animate, and stop animating upon a second click. Upon pressing another button, 10 more gifs will appear above the previous ones. The user can also create their own button, but entering theme related text into a text box and clicking submit.  Each gif will display its rating and the website will be fully mobile responsive. 
