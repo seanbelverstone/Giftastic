@@ -16,8 +16,9 @@ Possibly also include:
 //button click event
 $("button").on("click", function() {
     var game = $(this).attr("data-game"); //grabs the data from the button
+    var limit = 10;
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-      game + "&api_key=idmgGsqOAloHdaE7trSyIAQ9iQskkUCT&limit=10"; //inputs the API url + user input + apikey and limit
+      game + "&api_key=idmgGsqOAloHdaE7trSyIAQ9iQskkUCT&" + limit; //inputs the API url + user input + apikey and limit
 
       $.ajax({ //ajax function to request a response
         url: queryURL,
@@ -31,12 +32,15 @@ $("button").on("click", function() {
         for (var i = 0; i < results.length; i++) {
             var gameImage = $("<img>");
             gameImage.attr("src", results[i].images.fixed_height.url);
+            gameImage.addClass("gif");
             var gameDiv = $("<div>");
             var p = $("<p>");
             p.text("Rating: " + results[i].rating);
             var giphyText = $("<p>");
             giphyText.text("This data is provided by the GIPHY API.");
-            gameDiv.append(gameImage, p, giphyText);
+            var favButton = $("<button>");
+            favButton.text("Favorite");
+            gameDiv.append(gameImage, p, giphyText, favButton);
             $("#gifLocation").prepend(gameDiv);
         }
     });
