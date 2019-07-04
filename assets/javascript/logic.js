@@ -11,14 +11,13 @@ Possibly also include:
 - favorites section
 - persistance of favorites section
 - change the amount of gifs to display (max 50) */
-
+var limit = "10";
 
 //button click event
-$("button").on("click", function() {
+$(".btn-outline-dark").on("click", function getGif() {
     var game = $(this).attr("data-game"); //grabs the data from the button
-    var limit = 10;
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-      game + "&api_key=idmgGsqOAloHdaE7trSyIAQ9iQskkUCT&rating=g&" + limit; //inputs the API url + user input + apikey and limit
+      game + "&api_key=idmgGsqOAloHdaE7trSyIAQ9iQskkUCT&rating=g&limit=" + limit; //inputs the API url + user input + apikey and limit
 
       $.ajax({ //ajax function to request a response
         url: queryURL,
@@ -31,32 +30,126 @@ $("button").on("click", function() {
 
         for (var i = 0; i < results.length; i++) {
             var gameImage = $("<img>"); //creates a variable that stores an img container in it
-            gameImage.attr("src", results[i].images.fixed_height_still.url); //stores the gif as a still image
-            gameImage.attr("data-state", "still")
+
             gameImage.addClass("gif"); //adds a class to the img so we can switch it to animate later
-            var gameDiv = $("<div>");
+
+            gameImage.attr("src", results[i].images.fixed_height_still.url); //starts off as a still image
+
+            gameImage.attr("data-state", "still"); //declares the beginning as a still image
+
+            gameImage.attr("data-still", results[i].images.fixed_height_still.url) //stores still url in gameImage
+
+            gameImage.attr("data-animate", results[i].images.fixed_height.url) //stores animated url in gameImage 
+
             var p = $("<p>");
             p.text("Rating: " + results[i].rating); //rating text
+
             var giphyText = $("<p>");
             giphyText.text("This data is provided by the GIPHY API.");
-            var favButton = $("<button>");
+
+            var favButton = $("<button>"); //Creates a favorite button
+            favButton.addClass("favButton");
             favButton.text("Favorite");
-            gameDiv.append(gameImage, p, giphyText, favButton);
+
+            var gameDiv = $("<div>"); //div that will hold all the information
+            gameDiv.append(gameImage, p, giphyText, favButton); //append all the bits to the gameDiv
+
             $("#gifLocation").prepend(gameDiv);
         }
 
-        $(".gif").click(function () {
-          for (var j = 0; j < results.length; j++) { //runs a loop through the results
+        $(".gif").click(function () { 
             var state = $(this).attr("data-state"); //stores the data-state in the state variable
+
             if (state === "still") {
-              gameImage.attr("src", results[j].images.fixed_height.url); //changes the url to specified animated image
+              $(this).attr("src", $(this).attr("data-animate")); //changes the url to specified animated image
               $(this).attr("data-state", "animate");
             } else {
-              gameImage.attr("src", results[j].images.fixed_height_still.url);
+              $(this).attr("src", $(this).attr("data-still"));
               $(this).attr("data-state", "still");
-          }
-        }
-        });
+            }
 
+        });
+        
+        // $(".favButton").click(function () {
+        //   $("#favorites").append($(""));
+        // })
     });
 });
+
+$("#submit").on("click", function() {
+  var userInput = ($(".form-control").val()); //declares a variable called userInput and stores the form value inside it
+  $(".form-control").val(""); //clears the form
+  var userButton = $("<button>"); //creates a button
+  userButton.text(userInput); 
+  userButton.addClass("btn btn-outline-dark");
+  userButton.attr("data-game", userInput);
+  $("#userButtons").append(userButton);
+
+  //wanted to use the getGit function rather than copy/pasting but it was outside of scope and not sure how to access it
+  userButton.on("click", function() {
+    var game = $(this).attr("data-game"); //grabs the data from the button
+    var limit = "10";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+      game + "&api_key=idmgGsqOAloHdaE7trSyIAQ9iQskkUCT&rating=g&limit=" + limit; //inputs the API url + user input + apikey and limit
+
+      $.ajax({ //ajax function to request a response
+        url: queryURL,
+        method: "GET"
+      }).then(function(response) { //waits for the response
+
+        console.log(response);
+
+        var results = response.data;
+
+        for (var i = 0; i < results.length; i++) {
+            var gameImage = $("<img>"); //creates a variable that stores an img container in it
+
+            gameImage.addClass("gif"); //adds a class to the img so we can switch it to animate later
+
+            gameImage.attr("src", results[i].images.fixed_height_still.url); //starts off as a still image
+
+            gameImage.attr("data-state", "still"); //declares the beginning as a still image
+
+            gameImage.attr("data-still", results[i].images.fixed_height_still.url) //stores still url in gameImage
+
+            gameImage.attr("data-animate", results[i].images.fixed_height.url) //stores animated url in gameImage 
+
+            var p = $("<p>");
+            p.text("Rating: " + results[i].rating); //rating text
+
+            var giphyText = $("<p>");
+            giphyText.text("This data is provided by the GIPHY API.");
+
+            var favButton = $("<button>"); //Creates a favorite button
+            favButton.addClass("favButton");
+            favButton.text("Favorite");
+
+            var gameDiv = $("<div>"); //div that will hold all the information
+            gameDiv.append(gameImage, p, giphyText, favButton); //append all the bits to the gameDiv
+
+            $("#gifLocation").prepend(gameDiv);
+        }
+
+        $(".gif").click(function () { 
+            var state = $(this).attr("data-state"); //stores the data-state in the state variable
+
+            if (state === "still") {
+              $(this).attr("src", $(this).attr("data-animate")); //changes the url to specified animated image
+              $(this).attr("data-state", "animate");
+            } else {
+              $(this).attr("src", $(this).attr("data-still"));
+              $(this).attr("data-state", "still");
+            }
+
+        });
+    });
+  });
+});
+
+
+
+
+
+$(".dropdown-item").on("click", function() {
+  limit = 10;
+  });
