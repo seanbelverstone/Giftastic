@@ -150,6 +150,17 @@ $("#submit").on("click", function() {
 
 
 
-$(".dropdown-item").on("click", function() {
-  limit = 10;
+$("#10").on("click", function() {
+  limit = "10";
+  alert("Gif limit set to 10!");
   });
+
+$("#20").on("click", function() {
+  limit = "20";
+  alert("Gif limit set to 20!");
+});
+
+$("#30").on("click", function() {
+  limit = "30";
+  alert("Gif limit set to 30!");
+});
