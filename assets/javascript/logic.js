@@ -19,7 +19,7 @@ Possibly also include:
 var limit = "10";
 
 //button click event
-$(".btn-outline-dark").on("click", function() {
+$(".btn-dark").on("click", function() {
     var game = $(this).attr("data-game"); //grabs the data from the button
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
       game + "&api_key=idmgGsqOAloHdaE7trSyIAQ9iQskkUCT&rating=g&limit=" + limit; //inputs the API url + user input + apikey and limit
@@ -81,7 +81,7 @@ $("#submit").on("click", function() {
   $(".form-control").val(""); //clears the form
   var userButton = $("<button>"); //creates a button
   userButton.text(userInput); 
-  userButton.addClass("btn btn-outline-dark");
+  userButton.addClass("btn btn-dark");
   userButton.attr("data-game", userInput);
   $("#userButtons").append(userButton);
 
