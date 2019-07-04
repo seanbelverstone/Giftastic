@@ -1,20 +1,19 @@
 /*Psuedocode
 
-On button click, display (prepend) 10 gifs of the selected game.
-When gifs display, make sure they're still images.
-Upon gif click, make the gif animated rather than still. Reverse this when gif is clicked again.
-When pressing another button, display (prepend) 10 gifs above the previous ones.
-User can write in a text box and a button is created when clicked.
-This created button works the same as the others. 
-Every gif has its rating and 'This data is provided by the GIPHY API.' below.
+On button click, display (prepend) 10 gifs of the selected game. DONE
+When gifs display, make sure they're still images. DONE
+Upon gif click, make the gif animated rather than still. Reverse this when gif is clicked again. DONE
+When pressing another button, display (prepend) 10 gifs above the previous ones. DONE
+User can write in a text box and a button is created when clicked. DONE
+This created button works the same as the others.  DONE
+Every gif has its rating and 'This data is provided by the GIPHY API.' below. DONE
 Possibly also include: 
-- favorites section
-- persistance of favorites section
-- change the amount of gifs to display (max 50) */
+- change the amount of gifs to display (max 50) DONE 
+- make mobile responsive */ 
 var limit = "10";
 
 //button click event
-$(".btn-outline-dark").on("click", function getGif() {
+$(".btn-outline-dark").on("click", function() {
     var game = $(this).attr("data-game"); //grabs the data from the button
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
       game + "&api_key=idmgGsqOAloHdaE7trSyIAQ9iQskkUCT&rating=g&limit=" + limit; //inputs the API url + user input + apikey and limit
@@ -47,12 +46,8 @@ $(".btn-outline-dark").on("click", function getGif() {
             var giphyText = $("<p>");
             giphyText.text("This data is provided by the GIPHY API.");
 
-            var favButton = $("<button>"); //Creates a favorite button
-            favButton.addClass("favButton");
-            favButton.text("Favorite");
-
             var gameDiv = $("<div>"); //div that will hold all the information
-            gameDiv.append(gameImage, p, giphyText, favButton); //append all the bits to the gameDiv
+            gameDiv.append(gameImage, p, giphyText); //append all the bits to the gameDiv
 
             $("#gifLocation").prepend(gameDiv);
         }
@@ -69,10 +64,6 @@ $(".btn-outline-dark").on("click", function getGif() {
             }
 
         });
-        
-        // $(".favButton").click(function () {
-        //   $("#favorites").append($(""));
-        // })
     });
 });
 
@@ -88,7 +79,6 @@ $("#submit").on("click", function() {
   //wanted to use the getGit function rather than copy/pasting but it was outside of scope and not sure how to access it
   userButton.on("click", function() {
     var game = $(this).attr("data-game"); //grabs the data from the button
-    var limit = "10";
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
       game + "&api_key=idmgGsqOAloHdaE7trSyIAQ9iQskkUCT&rating=g&limit=" + limit; //inputs the API url + user input + apikey and limit
 
@@ -120,12 +110,8 @@ $("#submit").on("click", function() {
             var giphyText = $("<p>");
             giphyText.text("This data is provided by the GIPHY API.");
 
-            var favButton = $("<button>"); //Creates a favorite button
-            favButton.addClass("favButton");
-            favButton.text("Favorite");
-
             var gameDiv = $("<div>"); //div that will hold all the information
-            gameDiv.append(gameImage, p, giphyText, favButton); //append all the bits to the gameDiv
+            gameDiv.append(gameImage, p, giphyText); //append all the bits to the gameDiv
 
             $("#gifLocation").prepend(gameDiv);
         }
@@ -146,10 +132,7 @@ $("#submit").on("click", function() {
   });
 });
 
-
-
-
-
+// dropdown items functions
 $("#10").on("click", function() {
   limit = "10";
   alert("Gif limit set to 10!");
@@ -164,3 +147,14 @@ $("#30").on("click", function() {
   limit = "30";
   alert("Gif limit set to 30!");
 });
+
+$("#40").on("click", function() {
+  limit = "40";
+  alert("Gif limit set to 40!");
+});
+
+$("#50").on("click", function() {
+  limit = "50";
+  alert("Gif limit set to 50!");
+});
+
