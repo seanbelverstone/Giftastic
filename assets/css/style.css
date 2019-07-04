@@ -1,3 +1,19 @@
+body {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .gifBlock {
     border: 5px solid black;
+    width: unset;
+    height: auto;
+    float: left;
+}
+
+img {
+    align-items: center;
+}
+
+.row {
+    margin: 35px;
 }
