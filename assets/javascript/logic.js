@@ -10,6 +10,12 @@ Every gif has its rating and 'This data is provided by the GIPHY API.' below. DO
 Possibly also include: 
 - change the amount of gifs to display (max 50) DONE 
 - make mobile responsive */ 
+
+
+
+
+
+
 var limit = "10";
 
 //button click event
@@ -28,28 +34,30 @@ $(".btn-outline-dark").on("click", function() {
         var results = response.data;
 
         for (var i = 0; i < results.length; i++) {
-            var gameImage = $("<img>"); //creates a variable that stores an img container in it
 
-            gameImage.addClass("gif"); //adds a class to the img so we can switch it to animate later
+          var gameImage = $("<img>"); //creates a variable that stores an img container in it
 
-            gameImage.attr("src", results[i].images.fixed_height_still.url); //starts off as a still image
+          gameImage.addClass("gif"); //adds a class to the img so we can switch it to animate later
 
-            gameImage.attr("data-state", "still"); //declares the beginning as a still image
+          gameImage.attr("src", results[i].images.fixed_height_still.url); //starts off as a still image
 
-            gameImage.attr("data-still", results[i].images.fixed_height_still.url) //stores still url in gameImage
+          gameImage.attr("data-state", "still"); //declares the beginning as a still image
 
-            gameImage.attr("data-animate", results[i].images.fixed_height.url) //stores animated url in gameImage 
+          gameImage.attr("data-still", results[i].images.fixed_height_still.url) //stores still url in gameImage
 
-            var p = $("<p>");
-            p.text("Rating: " + results[i].rating); //rating text
+          gameImage.attr("data-animate", results[i].images.fixed_height.url) //stores animated url in gameImage 
 
-            var giphyText = $("<p>");
-            giphyText.text("This data is provided by the GIPHY API.");
+          var p = $("<p>");
+          p.text("Rating: " + results[i].rating); //rating text
 
-            var gameDiv = $("<div>"); //div that will hold all the information
-            gameDiv.append(gameImage, p, giphyText); //append all the bits to the gameDiv
+          var giphyText = $("<p>");
+          giphyText.text("This data is provided by the GIPHY API.");
 
-            $("#gifLocation").prepend(gameDiv);
+          var gameDiv = $("<div>"); //div that will hold all the information
+          gameDiv.addClass("gifBlock");
+          gameDiv.append(gameImage, p, giphyText); //append all the bits to the gameDiv
+
+          $("#gifLocation").prepend(gameDiv);
         }
 
         $(".gif").click(function () { 
@@ -67,6 +75,7 @@ $(".btn-outline-dark").on("click", function() {
     });
 });
 
+// form submission click event
 $("#submit").on("click", function() {
   var userInput = ($(".form-control").val()); //declares a variable called userInput and stores the form value inside it
   $(".form-control").val(""); //clears the form
@@ -92,6 +101,7 @@ $("#submit").on("click", function() {
         var results = response.data;
 
         for (var i = 0; i < results.length; i++) {
+          
             var gameImage = $("<img>"); //creates a variable that stores an img container in it
 
             gameImage.addClass("gif"); //adds a class to the img so we can switch it to animate later
@@ -111,6 +121,7 @@ $("#submit").on("click", function() {
             giphyText.text("This data is provided by the GIPHY API.");
 
             var gameDiv = $("<div>"); //div that will hold all the information
+            gameDiv.addClass("gifBlock");
             gameDiv.append(gameImage, p, giphyText); //append all the bits to the gameDiv
 
             $("#gifLocation").prepend(gameDiv);
