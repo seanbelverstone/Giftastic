@@ -17,10 +17,9 @@ Possibly also include:
 
 var topics = ["Halo", "Rocket League", "Elite Dangerous", "Minecraft", "Doom"];
 var limit = "10";
-var gameText;
 function renderButtons() {
   for (var j = 0; j < topics.length; j++) { // for the topics array
-    gameText = (topics[j]);
+    var gameText = (topics[j]);
     var topicButton = $("<button>");
     topicButton.text(gameText);
     topicButton.addClass("btn btn-dark");
@@ -33,10 +32,11 @@ function renderButtons() {
   renderButtons();
 
 //button click event
-$(".btn btn-dark").on("click", function() {
+var defaultButton = $(document.getElementsByClassName('btn-dark'));
+defaultButton.on("click", function() {
     var game = $(this).attr("data-game").toLowerCase().trim(); //grabs the data from the button
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-      game + "&api_key=idmgGsqOAloHdaE7trSyIAQ9iQskkUCT&rating=g&limit=" + limit; //inputs the API url + user input + apikey and limit
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=(" +
+      game + ")&api_key=idmgGsqOAloHdaE7trSyIAQ9iQskkUCT&rating=g&limit=" + limit; //inputs the API url + user input + apikey and limit
 
       $.ajax({ //ajax function to request a response
         url: queryURL,
