@@ -9,18 +9,29 @@ This created button works the same as the others.  DONE
 Every gif has its rating and 'This data is provided by the GIPHY API.' below. DONE
 Possibly also include: 
 - change the amount of gifs to display (max 50) DONE 
-- make mobile responsive */ 
+- make mobile responsive DONE */ 
 
 
 
 
 
-userButtonArray = [];
+var topics = ["Halo", "Rocket League", "Elite Dangerous", "Minecraft", "Doom"];
 var limit = "10";
 
+$(document).ready(function showButtons() {
+  for (var j = 0; j < topics.length; j++) { // for the topics array
+    var topicButton = $("<button>");
+    var gameText = (topics[j]);
+    topicButton.text(gameText);
+    topicButton.addClass("btn btn-dark");
+    topicButton.attr("data-game", gameText);
+    $(".topic-location").append(topicButton);    
+  }
+});
+
 //button click event
-$(".btn-dark").on("click", function() {
-    var game = $(this).attr("data-game"); //grabs the data from the button
+$(".btn btn-dark").on("click", function() {
+    var game = $(this).attr("data-game").toLowerCase().trim(); //grabs the data from the button
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
       game + "&api_key=idmgGsqOAloHdaE7trSyIAQ9iQskkUCT&rating=g&limit=" + limit; //inputs the API url + user input + apikey and limit
 
@@ -33,8 +44,8 @@ $(".btn-dark").on("click", function() {
 
         var results = response.data;
 
-        for (var i = 0; i < results.length; i++) {
-
+        for (var i = 0; i < results.length; i++) { //for the api json
+        
           var gameImage = $("<img>"); //creates a variable that stores an img container in it
 
           gameImage.addClass("gif"); //adds a class to the img so we can switch it to animate later
@@ -58,7 +69,8 @@ $(".btn-dark").on("click", function() {
           gameDiv.append(gameImage, p, giphyText); //append all the bits to the gameDiv
 
           $("#gifLocation").prepend(gameDiv);
-        }
+        
+      }
 
         $(".gif").click(function () { 
             var state = $(this).attr("data-state"); //stores the data-state in the state variable
@@ -79,13 +91,13 @@ $(".btn-dark").on("click", function() {
 $("#submit").on("click", function() {
   var userInput = ($(".form-control").val()); //declares a variable called userInput and stores the form value inside it
   $(".form-control").val(""); //clears the form
-  userButtonArray.push(userInput);
+  topics.push(userInput);
   var userButton = $("<button>"); //creates a button
   userButton.text(userInput); 
   userButton.addClass("btn btn-dark");
   userButton.attr("data-game", userInput);
-  console.log(userButtonArray);
-  $("#userButtons").append(userButton);
+  console.log(topics);
+  $(".topic-location").append(userButton);
 
   //wanted to use the getGit function rather than copy/pasting but it was outside of scope and not sure how to access it
   userButton.on("click", function() {
