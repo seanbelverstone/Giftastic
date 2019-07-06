@@ -17,17 +17,20 @@ Possibly also include:
 
 var topics = ["Halo", "Rocket League", "Elite Dangerous", "Minecraft", "Doom"];
 var limit = "10";
-
-$(document).ready(function showButtons() {
+var gameText;
+function renderButtons() {
   for (var j = 0; j < topics.length; j++) { // for the topics array
+    gameText = (topics[j]);
     var topicButton = $("<button>");
-    var gameText = (topics[j]);
     topicButton.text(gameText);
     topicButton.addClass("btn btn-dark");
     topicButton.attr("data-game", gameText);
-    $(".topic-location").append(topicButton);    
-  }
-});
+    $(".topic-location").append(topicButton);
+    console.log(gameText);    
+}
+};
+
+  renderButtons();
 
 //button click event
 $(".btn btn-dark").on("click", function() {
