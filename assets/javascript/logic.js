@@ -15,7 +15,7 @@ Possibly also include:
 
 
 
-
+userButtonArray = [];
 var limit = "10";
 
 //button click event
@@ -79,10 +79,12 @@ $(".btn-dark").on("click", function() {
 $("#submit").on("click", function() {
   var userInput = ($(".form-control").val()); //declares a variable called userInput and stores the form value inside it
   $(".form-control").val(""); //clears the form
+  userButtonArray.push(userInput);
   var userButton = $("<button>"); //creates a button
   userButton.text(userInput); 
   userButton.addClass("btn btn-dark");
   userButton.attr("data-game", userInput);
+  console.log(userButtonArray);
   $("#userButtons").append(userButton);
 
   //wanted to use the getGit function rather than copy/pasting but it was outside of scope and not sure how to access it
